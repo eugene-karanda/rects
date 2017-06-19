@@ -17,7 +17,7 @@ import static org.overmind.rects.Point.of;
 public class RectanglesMatcherTest {
 
     @Test
-    public void matchTest() throws Exception {
+    public void matchTest1() throws Exception {
         RectanglesMatcher rectanglesMatcher = new RectanglesMatcher(
             ZoneBuilder.builder()
                 .add(new Rectangle(
@@ -59,4 +59,58 @@ public class RectanglesMatcherTest {
             );
     }
 
+    @Test
+    public void matchTest2() throws Exception {
+        RectanglesMatcher rectanglesMatcher = new RectanglesMatcher(
+            ZoneBuilder.builder()
+                .add(new Rectangle(
+                    of(0.0, 0.0),
+                    of(0.0, 5.0),
+                    of(5.0, 5.0),
+                    of(5.0, 0.0)
+                ))
+                .add(new Rectangle(
+                    of(-10.0, 0.0),
+                    of(-10.0, 5.0),
+                    of(-5.0, 5.0),
+                    of(-5.0, 0.0)
+                ))
+                .build()
+        );
+        Map<Point, Optional<Rectangle>> matchMap = rectanglesMatcher.matchAll(Arrays.asList(
+            of(5, 2.5),
+            of(-7.0, 2.0),
+            of(0, 10.0)
+        ));
+
+        assertThat(matchMap)
+            .containsOnly(
+                entry(
+                    of(5, 2.5),
+                    Optional.of(
+                        new Rectangle(
+                            of(0.0, 0.0),
+                            of(0.0, 5.0),
+                            of(5.0, 5.0),
+                            of(5.0, 0.0)
+                        )
+                    )
+                ),
+                entry(
+                    of(-7.0, 2.0),
+                    Optional.of(
+                        new Rectangle(
+                            of(-10.0, 0.0),
+                            of(-10.0, 5.0),
+                            of(-5.0, 5.0),
+                            of(-5.0, 0.0)
+                        )
+                    )
+                ),
+                entry(
+                    of(0, 10.0),
+                    Optional.empty()
+                )
+            );
+    }
 }

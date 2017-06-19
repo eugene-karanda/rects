@@ -50,7 +50,6 @@ class Rectangle {
             byThreePoints(b, c, point) +
             byThreePoints(c, d, point) +
             byThreePoints(a, d, point);
-        System.out.println(sum);
         return Math.abs(sum - area) < E;
     }
 

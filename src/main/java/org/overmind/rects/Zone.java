@@ -19,6 +19,10 @@ class Zone {
 
     private List<Rectangle> rectangles;
 
+    static Zone ofCenter(Point center, double radius, Rectangle rectangle){
+        return new Zone(center, radius, rectangle);
+    }
+
     static Zone ofRectangle(Rectangle rectangle) {
         return new Zone(
             rectangle.center(),
@@ -33,6 +37,10 @@ class Zone {
 
         this.innerZones = new ArrayList<>();
         this.rectangles = new ArrayList<>(Collections.singleton(rectangle));
+    }
+
+    Point center() {
+        return center;
     }
 
     void add(Zone zone) {
@@ -82,5 +90,4 @@ class Zone {
     private boolean match(Rectangle rectangle) {
         return match(rectangle.center());
     }
-
 }

@@ -21,7 +21,11 @@ class ZoneBuilder {
         }
 
         if (!zone.add(rectangle)) {
-            Zone outerZone = Zone.ofRectangle(rectangle);
+            Zone outerZone = Zone.ofCenter(
+                zone.center(),
+                zone.center().distanceTo(rectangle.center()),
+                rectangle
+            );
             outerZone.add(zone);
             zone = outerZone;
         }
